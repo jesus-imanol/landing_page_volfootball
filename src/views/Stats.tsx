@@ -24,7 +24,7 @@ function Counter({
 
   useEffect(() => {
     if (isInView) {
-      animate(count, value, { duration: 2, ease: "easeOut" });
+      animate(count, value, { duration: 2, ease: "easeOut" as const });
     }
   }, [isInView, count, value]);
 

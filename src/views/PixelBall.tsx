@@ -10,7 +10,7 @@ export default function PixelBall() {
         rotate: [0, 360],
       }}
       transition={{
-        y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+        y: { duration: 3, repeat: Infinity, ease: "easeInOut" as const },
         rotate: { duration: 8, repeat: Infinity, ease: "linear" },
       }}
       className="relative"
