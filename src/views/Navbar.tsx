@@ -34,10 +34,16 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="#cta"
+            href="/login"
+            className="px-5 py-2 border border-neo-accent/40 text-neo-accent font-medium text-sm rounded-lg hover:bg-neo-accent/10 transition-all"
+          >
+            Iniciar sesión
+          </a>
+          <a
+            href="/register"
             className="px-5 py-2 bg-neo-accent text-black font-bold text-sm rounded-lg hover:bg-neo-accent/90 transition-all"
           >
-            Empezar gratis
+            Registrarse
           </a>
         </div>
       </div>

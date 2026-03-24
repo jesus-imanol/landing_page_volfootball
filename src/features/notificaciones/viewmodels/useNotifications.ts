@@ -12,8 +12,8 @@ export function useNotifications() {
   const load = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await api.get<{ data: Notificacion[] }>("/v1/notificaciones");
-      setNotifications(res.data || []);
+      const res = await api.get<{ data: Notificacion[] | null }>("/v1/notificaciones");
+      setNotifications(Array.isArray(res.data) ? res.data : []);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Error");
     } finally {

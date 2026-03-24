@@ -58,7 +58,7 @@ export default function Hero() {
             className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
             <a
-              href="#cta"
+              href="/register"
               className="px-8 py-3.5 bg-neo-accent text-black font-bold rounded-xl text-base hover:scale-105 transition-transform animate-glow-pulse"
             >
               Empezar gratis
