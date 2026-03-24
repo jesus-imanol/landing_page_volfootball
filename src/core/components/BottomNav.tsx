@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Gamepad2, Mail, Bell, User } from "lucide-react";
+import { Home, Gamepad2, Mail, QrCode, User } from "lucide-react";
 
 const tabs = [
   { href: "/dashboard", icon: Home, label: "Inicio" },
   { href: "/retas", icon: Gamepad2, label: "Retas" },
+  { href: "/credencial", icon: QrCode, label: "Mi QR" },
   { href: "/invitaciones", icon: Mail, label: "Invitar" },
-  { href: "/notificaciones", icon: Bell, label: "Notifs" },
   { href: "/perfil", icon: User, label: "Perfil" },
 ];
 

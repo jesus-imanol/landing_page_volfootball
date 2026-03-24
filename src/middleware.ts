@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const PROTECTED = ["/dashboard", "/retas", "/invitaciones", "/notificaciones", "/perfil"];
+const PROTECTED = ["/dashboard", "/retas", "/invitaciones", "/notificaciones", "/perfil", "/credencial"];
 const AUTH_PAGES = ["/login", "/register"];
 
 export function middleware(request: NextRequest) {
@@ -23,5 +23,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/retas/:path*", "/invitaciones/:path*", "/notificaciones/:path*", "/perfil/:path*", "/login", "/register"],
+  matcher: ["/dashboard/:path*", "/retas/:path*", "/invitaciones/:path*", "/notificaciones/:path*", "/perfil/:path*", "/credencial/:path*", "/login", "/register"],
 };
