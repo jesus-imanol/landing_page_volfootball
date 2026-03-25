@@ -30,7 +30,7 @@ export default function InvitacionesView() {
             placeholder="ABC1234"
             maxLength={10}
             onKeyDown={(e) => e.key === "Enter" && vm.joinWithCode()}
-            className="flex-1 bg-neo-surface border border-neo-border rounded-xl px-4 py-2.5 text-white placeholder:text-neo-secondary/50 focus:border-neo-accent focus:outline-none text-sm uppercase tracking-wider"
+            className="flex-1 bg-neo-surface border border-neo-border rounded-xl px-4 py-2.5 text-white placeholder:text-neo-secondary/50 focus:border-neo-accent focus:outline-none text-sm tracking-wider"
           />
           <button
             onClick={vm.joinWithCode}
