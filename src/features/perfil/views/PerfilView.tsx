@@ -1,8 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { User, Mail, Shield, LogOut } from "lucide-react";
+import toast from "react-hot-toast";
 import PortalCard from "@/core/components/PortalCard";
+import AvatarUpload from "@/features/media/views/AvatarUpload";
+import { useImageUpload } from "@/features/media/viewmodels/useImageUpload";
 import { useProfile } from "../viewmodels/useProfile";
 
 const roleNames: Record<number, string> = {
@@ -16,6 +20,24 @@ const roleNames: Record<number, string> = {
 
 export default function PerfilView() {
   const { user, logout } = useProfile();
+  const { uploadAvatar, isUploading, error } = useImageUpload();
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  const handleAvatarUpload = async (file: File) => {
+    const result = await uploadAvatar(file);
+    if (result) {
+      setAvatarUrl(result.url);
+      toast.success("Avatar actualizado");
+    } else if (error) {
+      toast.error(error);
+    }
+  };
+
+  const initials = user?.nombre_completo
+    ?.split(" ")
+    .slice(0, 2)
+    .map((w) => w.charAt(0).toUpperCase())
+    .join("") || "?";
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-lg mx-auto space-y-6">
@@ -23,10 +45,14 @@ export default function PerfilView() {
 
       {/* Avatar + name */}
       <div className="flex flex-col items-center py-6">
-        <div className="w-20 h-20 bg-neo-accent/15 border-2 border-neo-accent rounded-full flex items-center justify-center mb-4">
-          <span className="text-3xl font-bold text-neo-accent">
-            {user?.nombre_completo?.charAt(0)?.toUpperCase() || "?"}
-          </span>
+        <div className="mb-4">
+          <AvatarUpload
+            currentUrl={avatarUrl}
+            initials={initials}
+            isUploading={isUploading}
+            onFileSelected={handleAvatarUpload}
+            size={80}
+          />
         </div>
         <h2 className="text-white text-lg font-bold">{user?.nombre_completo || "Jugador"}</h2>
         <span className="text-neo-accent text-xs bg-neo-accent/10 px-3 py-1 rounded-full mt-1 font-medium">
