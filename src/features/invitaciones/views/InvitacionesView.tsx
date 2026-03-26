@@ -26,7 +26,7 @@ export default function InvitacionesView() {
           <input
             type="text"
             value={vm.joinCode}
-            onChange={(e) => vm.setJoinCode(e.target.value.toUpperCase())}
+            onChange={(e) => vm.setJoinCode(e.target.value)}
             placeholder="ABC1234"
             maxLength={10}
             onKeyDown={(e) => e.key === "Enter" && vm.joinWithCode()}
