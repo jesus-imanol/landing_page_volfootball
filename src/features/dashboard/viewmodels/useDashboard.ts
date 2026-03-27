@@ -29,8 +29,12 @@ export function useDashboard() {
       ]);
 
       const retas = retasRes.status === "fulfilled" ? (retasRes.value.data || []).slice(0, 3) : [];
-      const invs = invsRes.status === "fulfilled" ? (invsRes.value.invitaciones || []).filter((i: { id: number }) => i).length : 0;
+      const invs = invsRes.status === "fulfilled" ? (invsRes.value.invitaciones ?? []).length : 0;
       const notifs = notifsRes.status === "fulfilled" ? (notifsRes.value.data || []).filter((n: { leida: boolean }) => !n.leida).length : 0;
+
+      if (invsRes.status === "rejected") {
+        console.error("[dashboard] invitaciones request failed:", invsRes.reason);
+      }
 
       setData({
         retas,
