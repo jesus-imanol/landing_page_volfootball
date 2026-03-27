@@ -17,5 +17,6 @@ export interface AuthResponse {
     nombre_completo: string;
     correo: string;
     rol_id: number;
+    foto_perfil_url?: string;
   };
 }

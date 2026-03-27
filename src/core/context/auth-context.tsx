@@ -43,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       nombre_completo: res.data.nombre_completo,
       correo: res.data.correo,
       rol_id: res.data.rol_id,
+      foto_perfil_url: res.data.foto_perfil_url,
     };
     setStoredUser(u);
     setUser(u);
