@@ -16,6 +16,7 @@ interface AuthContextType {
   login: (data: LoginRequest) => Promise<void>;
   register: (data: RegisterRequest) => Promise<void>;
   logout: () => void;
+  updateAvatarUrl: (url: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -60,8 +61,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     router.push("/login");
   };
 
+  const updateAvatarUrl = (url: string) => {
+    if (!user) return;
+    const updated = { ...user, foto_perfil_url: url };
+    setStoredUser(updated);
+    setUser(updated);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, login, register, logout, updateAvatarUrl }}>
       {children}
     </AuthContext.Provider>
   );

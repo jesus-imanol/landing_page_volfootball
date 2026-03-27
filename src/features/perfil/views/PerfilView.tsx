@@ -21,15 +21,16 @@ const roleNames: Record<number, string> = {
 };
 
 export default function PerfilView() {
-  const { user, logout } = useProfile();
+  const { user, logout, updateAvatarUrl } = useProfile();
   const { uploadAvatar, isUploading, error } = useImageUpload();
   const { invitations, accept, reject, actionLoading } = useInvitations();
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(user?.foto_perfil_url ?? null);
 
   const handleAvatarUpload = async (file: File) => {
     const result = await uploadAvatar(file);
     if (result) {
       setAvatarUrl(result.url);
+      updateAvatarUrl(result.url);
       toast.success("Avatar actualizado");
     } else if (error) {
       toast.error(error);

@@ -20,6 +20,7 @@ export interface StoredUser {
   nombre_completo: string;
   correo: string;
   rol_id: number;
+  foto_perfil_url?: string;
 }
 
 export function getStoredUser(): StoredUser | null {
