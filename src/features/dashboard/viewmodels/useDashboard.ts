@@ -29,6 +29,7 @@ export function useDashboard() {
       ]);
 
       const retas = retasRes.status === "fulfilled" ? (retasRes.value.data || []).slice(0, 3) : [];
+      console.log("[dashboard] invsRes:", invsRes);
       const invs = invsRes.status === "fulfilled" ? (invsRes.value.invitaciones ?? []).length : 0;
       const notifs = notifsRes.status === "fulfilled" ? (notifsRes.value.data || []).filter((n: { leida: boolean }) => !n.leida).length : 0;
 
