@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { User, Mail, Shield, LogOut, Check, X } from "lucide-react";
+import { User, Mail, Shield, LogOut, Check, X, Users, Crown } from "lucide-react";
 import toast from "react-hot-toast";
 import PortalCard from "@/core/components/PortalCard";
 import Spinner from "@/core/components/Spinner";
@@ -10,6 +10,7 @@ import AvatarUpload from "@/features/media/views/AvatarUpload";
 import { useImageUpload } from "@/features/media/viewmodels/useImageUpload";
 import { useInvitations } from "@/features/invitaciones/viewmodels/useInvitations";
 import { useProfile } from "../viewmodels/useProfile";
+import { useMisEquipos } from "../viewmodels/useMisEquipos";
 
 const roleNames: Record<number, string> = {
   1: "Super Admin",
@@ -24,6 +25,7 @@ export default function PerfilView() {
   const { user, logout, updateAvatarUrl } = useProfile();
   const { uploadAvatar, isUploading, error } = useImageUpload();
   const { invitations, accept, reject, actionLoading } = useInvitations();
+  const { equipos } = useMisEquipos();
   const [avatarUrl, setAvatarUrl] = useState<string | null>(user?.foto_perfil_url ?? null);
 
   const handleAvatarUpload = async (file: File) => {
@@ -127,6 +129,44 @@ export default function PerfilView() {
           </div>
         </PortalCard>
       )}
+
+      {/* Mis equipos */}
+      <PortalCard>
+        <h2 className="text-white font-semibold text-sm mb-3 flex items-center gap-2">
+          <Users className="w-4 h-4 text-neo-accent" />
+          Mis equipos
+        </h2>
+        {equipos.length === 0 ? (
+          <p className="text-neo-secondary text-xs text-center py-2">
+            No perteneces a ningún equipo aún
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {equipos.map((eq) => (
+              <div key={eq.id} className="flex items-center justify-between py-2 border-b border-neo-border/30 last:border-0">
+                <div>
+                  <p className="text-white text-sm font-medium">{eq.nombre}</p>
+                  <p className="text-neo-secondary text-xs mt-0.5">{eq.liga_nombre || "Liga"}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  {eq.es_capitan && (
+                    <span className="flex items-center gap-1 text-[10px] font-bold text-neo-accent bg-neo-accent/10 px-2 py-0.5 rounded-full">
+                      <Crown className="w-3 h-3" /> Capitán
+                    </span>
+                  )}
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                    eq.estado === "activo"
+                      ? "bg-neo-accent/10 text-neo-accent"
+                      : "bg-neo-secondary/10 text-neo-secondary"
+                  }`}>
+                    {eq.estado.charAt(0).toUpperCase() + eq.estado.slice(1)}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </PortalCard>
 
       {/* Logout */}
       <button
