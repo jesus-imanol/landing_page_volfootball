@@ -21,6 +21,19 @@ export default function TopBar() {
       </div>
 
       <div className="flex items-center gap-3">
+        <Link href="/perfil" title="Mi perfil">
+          {user?.foto_perfil_url ? (
+            <img
+              src={user.foto_perfil_url}
+              alt={user.nombre_completo || "Perfil"}
+              className="w-8 h-8 rounded-full object-cover border border-neo-border hover:border-neo-accent transition-colors"
+            />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-neo-surface border border-neo-border flex items-center justify-center text-neo-accent font-bold text-xs hover:border-neo-accent transition-colors">
+              {user?.nombre_completo?.split(" ").slice(0, 2).map(n => n[0]?.toUpperCase()).join("") || "?"}
+            </div>
+          )}
+        </Link>
         <Link
           href="/notificaciones"
           className="relative p-2 rounded-lg hover:bg-neo-surface transition-colors"

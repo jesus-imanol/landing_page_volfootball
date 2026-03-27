@@ -25,18 +25,12 @@ export function useDashboard() {
       const [retasRes, invsRes, notifsRes] = await Promise.allSettled([
         api.get<{ data: { id: number; title: string; fecha_hora: string; lugar: string; estado: string }[] }>("/v1/pickup-games"),
         api.get<{ invitaciones: { id: number }[] | null }>("/v1/invitaciones/mis-invitaciones"),
-        api.get<{ data: { leida: boolean }[] }>("/v1/notificaciones"),
+        api.get<{ data: { no_leidas: number } }>("/v1/notificaciones"),
       ]);
 
       const retas = retasRes.status === "fulfilled" ? (retasRes.value.data || []).slice(0, 3) : [];
-      console.log("[dashboard] invsRes raw:", JSON.stringify(invsRes));
       const invs = invsRes.status === "fulfilled" ? (invsRes.value.invitaciones ?? []).length : 0;
-      console.log("[dashboard] invs count:", invs);
-      const notifs = notifsRes.status === "fulfilled" ? (notifsRes.value.data || []).filter((n: { leida: boolean }) => !n.leida).length : 0;
-
-      if (invsRes.status === "rejected") {
-        console.error("[dashboard] invitaciones request failed:", invsRes.reason);
-      }
+      const notifs = notifsRes.status === "fulfilled" ? (notifsRes.value.data?.no_leidas ?? 0) : 0;
 
       setData({
         retas,

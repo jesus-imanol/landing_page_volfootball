@@ -12,8 +12,6 @@ export default function DashboardView() {
   const { user } = useAuthContext();
   const { data, isLoading } = useDashboard();
 
-  console.log("[DashboardView] isLoading:", isLoading, "data:", JSON.stringify(data));
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
