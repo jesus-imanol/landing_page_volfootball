@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { User, Mail, Shield, LogOut } from "lucide-react";
+import { User, Mail, Shield, LogOut, Check, X } from "lucide-react";
 import toast from "react-hot-toast";
 import PortalCard from "@/core/components/PortalCard";
+import Spinner from "@/core/components/Spinner";
 import AvatarUpload from "@/features/media/views/AvatarUpload";
 import { useImageUpload } from "@/features/media/viewmodels/useImageUpload";
+import { useInvitations } from "@/features/invitaciones/viewmodels/useInvitations";
 import { useProfile } from "../viewmodels/useProfile";
 
 const roleNames: Record<number, string> = {
@@ -21,6 +23,7 @@ const roleNames: Record<number, string> = {
 export default function PerfilView() {
   const { user, logout } = useProfile();
   const { uploadAvatar, isUploading, error } = useImageUpload();
+  const { invitations, accept, reject, actionLoading } = useInvitations();
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   const handleAvatarUpload = async (file: File) => {
@@ -86,6 +89,43 @@ export default function PerfilView() {
           </div>
         </div>
       </PortalCard>
+
+      {/* Pending invitations */}
+      {invitations.length > 0 && (
+        <PortalCard>
+          <h2 className="text-white font-semibold text-sm mb-3">
+            Invitaciones pendientes ({invitations.length})
+          </h2>
+          <div className="space-y-3">
+            {invitations.map((inv) => (
+              <div key={inv.id} className="flex items-center justify-between">
+                <div>
+                  <p className="text-white text-sm font-medium">{inv.equipo_nombre || "Equipo"}</p>
+                  <p className="text-neo-secondary text-xs mt-0.5">
+                    Invitado por {inv.invitador_nombre || "Capitán"}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => accept(inv.id)}
+                    disabled={actionLoading === inv.id}
+                    className="p-2 bg-neo-accent/10 rounded-lg hover:bg-neo-accent/20 transition-colors"
+                  >
+                    {actionLoading === inv.id ? <Spinner size={16} /> : <Check className="w-4 h-4 text-neo-accent" />}
+                  </button>
+                  <button
+                    onClick={() => reject(inv.id)}
+                    disabled={actionLoading === inv.id}
+                    className="p-2 bg-neo-error/10 rounded-lg hover:bg-neo-error/20 transition-colors"
+                  >
+                    <X className="w-4 h-4 text-neo-error" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </PortalCard>
+      )}
 
       {/* Logout */}
       <button
